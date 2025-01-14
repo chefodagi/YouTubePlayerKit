@@ -61,7 +61,9 @@ public final class YouTubePlayerViewController: YouTubePlayerBaseViewController 
     
     /// Deinit
     deinit {
-        self.player.pause()
+        Task {
+            try await self.player.pause()
+        }
     }
     
     // MARK: View-Lifecycle

@@ -4,6 +4,7 @@ import Foundation
 // MARK: - YouTubePlayer
 
 /// A YouTubePlayer
+@MainActor
 public final class YouTubePlayer: ObservableObject {
     
     // MARK: Properties
@@ -92,7 +93,7 @@ public final class YouTubePlayer: ObservableObject {
 
 // MARK: - YouTubePlayer+ExpressibleByStringLiteral
 
-extension YouTubePlayer: ExpressibleByStringLiteral {
+extension YouTubePlayer {
     
     /// Creates an instance initialized to the given string value.
     /// - Parameter value: The value of the new instance
@@ -108,7 +109,7 @@ extension YouTubePlayer: ExpressibleByStringLiteral {
 
 // MARK: - YouTubePlayer+Equatable
 
-extension YouTubePlayer: Equatable {
+extension YouTubePlayer: @preconcurrency Equatable {
 
     /// Returns a Boolean value indicating whether two values are equal.
     /// - Parameters:
@@ -125,7 +126,7 @@ extension YouTubePlayer: Equatable {
 
 // MARK: - YouTubePlayer+Hashable
 
-extension YouTubePlayer: Hashable {
+extension YouTubePlayer: @preconcurrency Hashable {
     
     /// Hashes the essential components of this value by feeding them into the given hasher.
     /// - Parameter hasher: The hasher to use when combining the components of this instance.

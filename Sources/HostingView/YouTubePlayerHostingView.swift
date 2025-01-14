@@ -62,7 +62,9 @@ public final class YouTubePlayerHostingView: YouTubePlayerHostingBaseView {
     
     /// Deinit
     deinit {
-        self.player.pause()
+        Task {
+            try await self.player.pause()
+        }
     }
     
 }
