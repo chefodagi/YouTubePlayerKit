@@ -7,7 +7,7 @@ public extension YouTubePlayer {
     /// Plays the currently cued/loaded video
     /// - Parameter completion: The completion closure
     func play(
-        completion: ((Result<Void, APIError>) -> Void)? = nil
+        completion: ((Result<Void, YouTubePlayer.APIError>) -> ())? = nil
     ) {
         self.webView.evaluate(
             javaScript: .player(function: "playVideo"),
@@ -17,11 +17,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Plays the currently cued/loaded video
-    func play() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.play(
-                completion: continuation.resume(with:)
-            )
+    func play() async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.play(
+                    completion: { continuation.resume(with: $0) }
+                )
+            }
         }
     }
     #endif
@@ -39,11 +41,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Pauses the currently playing video
-    func pause() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.pause(
-                completion: continuation.resume(with:)
-            )
+    func pause() async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.pause(
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -98,13 +102,15 @@ public extension YouTubePlayer {
     func seek(
         to time: Measurement<UnitDuration>,
         allowSeekAhead: Bool = true
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.seek(
-                to: time,
-                allowSeekAhead: allowSeekAhead,
-                completion: continuation.resume(with:)
-            )
+    ) async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.seek(
+                    to: time,
+                    allowSeekAhead: allowSeekAhead,
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -213,4 +219,17 @@ public extension YouTubePlayer {
     }
     #endif
     
+}
+
+public extension YouTubePlayer {
+    func forceError<Success: Sendable, Error: Swift.Error>(
+        _: Error.Type,
+        _ body: () async throws -> Success
+    ) async throws(Error) -> Success {
+        do {
+            return try await body()
+        } catch {
+            throw error as! Error
+        }
+    }
 }

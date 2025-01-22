@@ -91,7 +91,7 @@ extension YouTubePlayerWebView {
                 // Initialize Result
                 let result: Result<Response, YouTubePlayer.APIError> = {
                     // Check if an Error is available
-                    if let error = error {
+                    if let error = error, !((error as NSError).domain.hasPrefix("WKErrorDomain") && (error as NSError).code == 5) {
                         // Return failure with YouTubePlayerAPIError
                         return .failure(
                             .init(
