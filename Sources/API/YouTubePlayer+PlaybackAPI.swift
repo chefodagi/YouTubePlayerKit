@@ -19,11 +19,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Returns a number between 0 and 1 that specifies the percentage of the video that the player shows as buffered
-    func getVideoLoadedFraction() async throws -> Double {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getVideoLoadedFraction(
-                completion: continuation.resume
-            )
+    func getVideoLoadedFraction() async throws(YouTubePlayer.APIError) -> Double {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getVideoLoadedFraction(
+                    completion: continuation.resume
+                )
+            }
         }
     }
     #endif
@@ -81,11 +83,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Returns the PlaybackState of the player video
-    func getPlaybackState() async throws -> PlaybackState {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getPlaybackState(
-                completion: continuation.resume
-            )
+    func getPlaybackState() async throws(YouTubePlayer.APIError) -> PlaybackState {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getPlaybackState(
+                    completion: continuation.resume
+                )
+            }
         }
     }
     #endif
@@ -107,11 +111,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Returns the elapsed time in seconds since the video started playing
-    func getCurrentTime() async throws -> Measurement<UnitDuration> {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getCurrentTime(
-                completion: continuation.resume
-            )
+    func getCurrentTime() async throws(YouTubePlayer.APIError) -> Measurement<UnitDuration> {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getCurrentTime(
+                    completion: continuation.resume
+                )
+            }
         }
     }
     #endif
@@ -174,11 +180,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Returns the current PlaybackMetadata
-    func getPlaybackMetadata() async throws -> PlaybackMetadata {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getPlaybackMetadata(
-                completion: continuation.resume
-            )
+    func getPlaybackMetadata() async throws(YouTubePlayer.APIError) -> PlaybackMetadata {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getPlaybackMetadata(
+                    completion: continuation.resume
+                )
+            }
         }
     }
     #endif

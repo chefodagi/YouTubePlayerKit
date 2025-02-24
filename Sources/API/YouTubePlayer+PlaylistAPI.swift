@@ -17,11 +17,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// This function loads and plays the next video in the playlist
-    func nextVideo() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.nextVideo(
-                completion: continuation.resume(with:)
-            )
+    func nextVideo() async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.nextVideo(
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -39,11 +41,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// This function loads and plays the previous video in the playlist
-    func previousVideo() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.previousVideo(
-                completion: continuation.resume(with:)
-            )
+    func previousVideo() async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.previousVideo(
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -71,12 +75,14 @@ public extension YouTubePlayer {
     ///   - index: The index of the video that you want to play in the playlist
     func playVideo(
         at index: Int
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.playVideo(
-                at: index,
-                completion: continuation.resume(with:)
-            )
+    ) async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.playVideo(
+                    at: index,
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -106,12 +112,14 @@ public extension YouTubePlayer {
     ///   - enabled: Bool value if is enabled
     func setLoop(
         enabled: Bool
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.setLoop(
-                enabled: enabled,
-                completion: continuation.resume(with:)
-            )
+    ) async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.setLoop(
+                    enabled: enabled,
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -141,12 +149,14 @@ public extension YouTubePlayer {
     ///   - enabled: Bool value if is enabled
     func setShuffle(
         enabled: Bool
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.setShuffle(
-                enabled: enabled,
-                completion: continuation.resume(with:)
-            )
+    ) async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.setShuffle(
+                    enabled: enabled,
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -165,11 +175,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// This function returns an array of the video IDs in the playlist as they are currently ordered
-    func getPlaylist() async throws -> [String] {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getPlaylist(
-                completion: continuation.resume
-            )
+    func getPlaylist() async throws(YouTubePlayer.APIError) -> [String] {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getPlaylist(
+                    completion: continuation.resume
+                )
+            }
         }
     }
     #endif
@@ -188,11 +200,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// This function returns the index of the playlist video that is currently playing.
-    func getPlaylistIndex() async throws -> Int {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getPlaylistIndex(
-                completion: continuation.resume
-            )
+    func getPlaylistIndex() async throws(YouTubePlayer.APIError) -> Int {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getPlaylistIndex(
+                    completion: continuation.resume
+                )
+            }
         }
     }
     #endif

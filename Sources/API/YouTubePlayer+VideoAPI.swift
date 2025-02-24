@@ -65,11 +65,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Stops and cancels loading of the current video
-    func stop() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.stop(
-                completion: continuation.resume(with:)
-            )
+    func stop() async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.stop(
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -147,13 +149,15 @@ public extension YouTubePlayer {
     func fastForward(
         by time: Measurement<UnitDuration>,
         allowSeekAhead: Bool = true
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.fastForward(
-                by: time,
-                allowSeekAhead: allowSeekAhead,
-                completion: continuation.resume(with:)
-            )
+    ) async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.fastForward(
+                    by: time,
+                    allowSeekAhead: allowSeekAhead,
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -190,13 +194,15 @@ public extension YouTubePlayer {
     func rewind(
         by time: Measurement<UnitDuration>,
         allowSeekAhead: Bool = true
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.rewind(
-                by: time,
-                allowSeekAhead: allowSeekAhead,
-                completion: continuation.resume(with:)
-            )
+    ) async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.rewind(
+                    by: time,
+                    allowSeekAhead: allowSeekAhead,
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif

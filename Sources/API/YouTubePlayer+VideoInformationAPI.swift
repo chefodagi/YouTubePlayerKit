@@ -18,11 +18,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Show Stats for Nerds which displays additional video information
-    func showStatsForNerds() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.showStatsForNerds(
-                completion: continuation.resume(with:)
-            )
+    func showStatsForNerds() async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.showStatsForNerds(
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -40,11 +42,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Hide Stats for Nerds
-    func hideStatsForNerds() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.hideStatsForNerds(
-                completion: continuation.resume(with:)
-            )
+    func hideStatsForNerds() async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.hideStatsForNerds(
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -66,9 +70,11 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Retrieve the YouTubePlayer Information
-    func getInformation() async throws -> Information {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getInformation(completion: continuation.resume)
+    func getInformation() async throws(YouTubePlayer.APIError) -> Information {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getInformation(completion: continuation.resume)
+            }
         }
     }
     #endif
@@ -90,9 +96,11 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Returns the duration in seconds of the currently playing video
-    func getDuration() async throws -> Measurement<UnitDuration> {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getDuration(completion: continuation.resume)
+    func getDuration() async throws(YouTubePlayer.APIError) -> Measurement<UnitDuration> {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getDuration(completion: continuation.resume)
+            }
         }
     }
     #endif
@@ -129,9 +137,11 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Returns the YouTube.com URL for the currently loaded/playing video
-    func getVideoURL() async throws -> String {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getVideoURL(completion: continuation.resume)
+    func getVideoURL() async throws(YouTubePlayer.APIError) -> String {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getVideoURL(completion: continuation.resume)
+            }
         }
     }
     #endif
@@ -150,9 +160,11 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Returns the embed code for the currently loaded/playing video
-    func getVideoEmbedCode() async throws -> String {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getVideoEmbedCode(completion: continuation.resume)
+    func getVideoEmbedCode() async throws(YouTubePlayer.APIError) -> String {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getVideoEmbedCode(completion: continuation.resume)
+            }
         }
     }
     #endif

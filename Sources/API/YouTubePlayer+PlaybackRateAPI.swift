@@ -18,11 +18,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// This function retrieves the playback rate of the currently playing video
-    func getPlaybackRate() async throws -> PlaybackRate {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getPlaybackRate(
-                completion: continuation.resume
-            )
+    func getPlaybackRate() async throws(YouTubePlayer.APIError) -> PlaybackRate {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getPlaybackRate(
+                    completion: continuation.resume
+                )
+            }
         }
     }
     #endif
@@ -50,12 +52,14 @@ public extension YouTubePlayer {
     ///   - playbackRate: The playback rate
     func set(
         playbackRate: PlaybackRate
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.set(
-                playbackRate: playbackRate,
-                completion: continuation.resume(with:)
-            )
+    ) async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.set(
+                    playbackRate: playbackRate,
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -74,11 +78,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// This function returns the set of playback rates in which the current video is available
-    func getAvailablePlaybackRates() async throws -> [PlaybackRate] {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getAvailablePlaybackRates(
-                completion: continuation.resume
-            )
+    func getAvailablePlaybackRates() async throws(YouTubePlayer.APIError) -> [PlaybackRate] {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getAvailablePlaybackRates(
+                    completion: continuation.resume
+                )
+            }
         }
     }
     #endif

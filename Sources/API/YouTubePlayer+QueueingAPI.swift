@@ -38,12 +38,14 @@ public extension YouTubePlayer {
     /// - Parameter source: The YouTubePlayer Source to load
     func load(
         source: Source?
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.load(
-                source: source,
-                completion: continuation.resume(with:)
-            )
+    ) async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.load(
+                    source: source,
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -82,12 +84,14 @@ public extension YouTubePlayer {
     /// - Parameter source: The YouTubePlayer Source to cue
     func cue(
         source: Source?
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.cue(
-                source: source,
-                completion: continuation.resume(with:)
-            )
+    ) async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.cue(
+                    source: source,
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif

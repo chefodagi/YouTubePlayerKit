@@ -17,11 +17,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Mutes the player
-    func mute() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.mute(
-                completion: continuation.resume(with:)
-            )
+    func mute() async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.mute(
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -39,11 +41,13 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Unmutes the player
-    func unmute() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.unmute(
-                completion: continuation.resume(with:)
-            )
+    func unmute() async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.unmute(
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif
@@ -62,9 +66,11 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Returns Bool value if the player is muted
-    func isMuted() async throws -> Bool {
-        try await withCheckedThrowingContinuation { continuation in
-            self.isMuted(completion: continuation.resume)
+    func isMuted() async throws(YouTubePlayer.APIError) -> Bool {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.isMuted(completion: continuation.resume)
+            }
         }
     }
     #endif
@@ -83,9 +89,11 @@ public extension YouTubePlayer {
     
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Returns the player's current volume, an integer between 0 and 100
-    func getVolume() async throws -> Int {
-        try await withCheckedThrowingContinuation { continuation in
-            self.getVolume(completion: continuation.resume)
+    func getVolume() async throws(YouTubePlayer.APIError) -> Int {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.getVolume(completion: continuation.resume)
+            }
         }
     }
     #endif
@@ -127,12 +135,14 @@ public extension YouTubePlayer {
     ///   - volume: The volume
     func set(
         volume: Int
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.set(
-                volume: volume,
-                completion: continuation.resume(with:)
-            )
+    ) async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.set(
+                    volume: volume,
+                    completion: continuation.resume(with:)
+                )
+            }
         }
     }
     #endif

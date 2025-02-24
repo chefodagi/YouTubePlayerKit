@@ -60,12 +60,14 @@ public extension YouTubePlayer {
     ///   - configuration: The YouTubePlayer Configuration
     func update(
         configuration: Configuration
-    ) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.update(
-                configuration: configuration,
-                completion: continuation.resume
-            )
+    ) async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.update(
+                    configuration: configuration,
+                    completion: continuation.resume
+                )
+            }
         }
     }
     #endif
@@ -84,11 +86,13 @@ public extension YouTubePlayer {
     #if compiler(>=5.5) && canImport(_Concurrency)
     /// Reloads the YouTubePlayer
     /// - Parameter completion: The completion closure
-    func reload() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            self.reload(
-                completion: continuation.resume
-            )
+    func reload() async throws(YouTubePlayer.APIError) {
+        try await forceError(YouTubePlayer.APIError.self) {
+            try await withCheckedThrowingContinuation { continuation in
+                self.reload(
+                    completion: continuation.resume
+                )
+            }
         }
     }
     #endif
